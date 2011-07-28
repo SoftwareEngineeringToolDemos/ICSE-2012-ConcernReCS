@@ -1,7 +1,6 @@
-//Example class
+//Main ConcernReCS view, to show the found code smells
 
 package ufmg.crcs.views;
-
 
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.ui.part.*;
@@ -13,47 +12,17 @@ import org.eclipse.ui.*;
 import org.eclipse.swt.widgets.Menu;
 import org.eclipse.swt.SWT;
 
-
-/**
- * This sample class demonstrates how to plug-in a new
- * workbench view. The view shows data obtained from the
- * model. The sample creates a dummy model on the fly,
- * but a real implementation would connect to the model
- * available either in this or another plug-in (e.g. the workspace).
- * The view is connected to the model using a content provider.
- * <p>
- * The view uses a label provider to define how model
- * objects should be presented in the view. Each
- * view can present the same model objects using
- * different labels and icons, if needed. Alternatively,
- * a single label provider can be shared between views
- * in order to ensure that objects of the same type are
- * presented in the same way everywhere.
- * <p>
- */
+import ufmg.crcs.actions.*;
 
 public class ConcernReCSView extends ViewPart 
 {
-
-	/**
-	 * The ID of the view as specified by the extension.
-	 */
+	//The ID of the view
 	public static final String ID = "ufmg.crcs.views.ConcernReCSView";
 
 	private TableViewer viewer;
-	private Action action1;
-	private Action action2;
+	private SniffAction sniffaction;
+	private SaveAction saveaction;
 	private Action doubleClickAction;
-
-	/*
-	 * The content provider class is responsible for
-	 * providing objects to the view. It can wrap
-	 * existing objects in adapters or simply return
-	 * objects as-is. These objects may be sensitive
-	 * to the current input of the view, or ignore
-	 * it and always show the same content 
-	 * (like Task List, for example).
-	 */
 	 
 	class ViewContentProvider implements IStructuredContentProvider 
 	{
@@ -67,7 +36,7 @@ public class ConcernReCSView extends ViewPart
 		
 		public Object[] getElements(Object parent) 
 		{
-			return new String[] { "One", "Two", "Three" };
+			return new String[] { "Code Smell A", "Code Smell B", "Code Smell C" };
 		}
 	}
 	
@@ -94,17 +63,10 @@ public class ConcernReCSView extends ViewPart
 	{
 	}
 
-	/**
-	 * The constructor.
-	 */
 	public ConcernReCSView() 
 	{
 	}
 
-	/**
-	 * This is a callback that will allow us
-	 * to create the viewer and initialize it.
-	 */
 	public void createPartControl(Composite parent) 
 	{
 		viewer = new TableViewer(parent, SWT.MULTI | SWT.H_SCROLL | SWT.V_SCROLL);
@@ -144,52 +106,31 @@ public class ConcernReCSView extends ViewPart
 
 	private void fillLocalPullDown(IMenuManager manager) 
 	{
-		manager.add(action1);
+		manager.add(sniffaction);
 		manager.add(new Separator());
-		manager.add(action2);
+		manager.add(saveaction);
 	}
 
 	private void fillContextMenu(IMenuManager manager) 
 	{
-		manager.add(action1);
-		manager.add(action2);
+		manager.add(sniffaction);
+		manager.add(saveaction);
 		// Other plug-ins can contribute there actions here
 		manager.add(new Separator(IWorkbenchActionConstants.MB_ADDITIONS));
 	}
 	
 	private void fillLocalToolBar(IToolBarManager manager) 
 	{
-		manager.add(action1);
-		manager.add(action2);
+		manager.add(sniffaction);
+		manager.add(saveaction);
 	}
 
 	private void makeActions() 
 	{
-		action1 = new Action() 
-		{
-			public void run() 
-			{
-				showMessage("Action 1 executed");
-			}
-		};
+		sniffaction = new SniffAction(viewer) ;
 		
-		action1.setText("Action 1");
-		action1.setToolTipText("Action 1 tooltip");
-		action1.setImageDescriptor(PlatformUI.getWorkbench().getSharedImages().
-			getImageDescriptor(ISharedImages.IMG_OBJS_INFO_TSK));
+		saveaction = new SaveAction(viewer); 
 		
-		action2 = new Action() 
-		{
-			public void run() 
-			{
-				showMessage("Action 2 executed");
-			}
-		};
-		
-		action2.setText("Action 2");
-		action2.setToolTipText("Action 2 tooltip");
-		action2.setImageDescriptor(PlatformUI.getWorkbench().getSharedImages().
-				getImageDescriptor(ISharedImages.IMG_OBJS_INFO_TSK));
 		doubleClickAction = new Action() 
 		{
 			public void run() 
@@ -211,15 +152,13 @@ public class ConcernReCSView extends ViewPart
 			}
 		});
 	}
+
 	private void showMessage(String message) 
 	{
 		MessageDialog.openInformation(viewer.getControl().getShell(),
 				"ConcernReCS",message);
 	}
 
-	/**
-	 * Passing the focus request to the viewer's control.
-	 */
 	public void setFocus() 
 	{
 		viewer.getControl().setFocus();
