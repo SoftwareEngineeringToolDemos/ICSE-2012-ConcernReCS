@@ -7,6 +7,9 @@ import org.eclipse.ui.ISharedImages;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.jface.viewers.TableViewer;
 import org.eclipse.jface.dialogs.MessageDialog;
+/**/import ca.mcgill.cs.serg.cm.ConcernMapper;
+/**/import java.util.*;
+/**/import org.eclipse.jdt.core.*;
 
 public class SniffAction extends Action
 {
@@ -23,6 +26,17 @@ public class SniffAction extends Action
 	
 	public void run() 
 	{
+		/**/String concernnames[]=ConcernMapper.getDefault().getConcernModel().getConcernNames();
+		
+		int j;
+		for(j=0;j<concernnames.length;j++)
+		{
+			/**/Set<Object> setelements=ConcernMapper.getDefault().getConcernModel().getElements(concernnames[j]);
+			/**/Object[] elements=setelements.toArray();		
+			int i;
+			for(i=0;i<elements.length;i++)showMessage(" "+((IJavaElement)elements[i]).getElementName());
+		}
+		
 		showMessage("Sniff action executed");
 	}
 
