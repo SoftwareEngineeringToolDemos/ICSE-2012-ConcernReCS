@@ -6,9 +6,9 @@ abstract class CodeSmell
 {
 	private String name; //The name of the code smell
 	private String concerns_names[]; //Names of the concerns related to the code smell
-	private int error_proneness_scale; //Error-proneness of the code smell
+	private String error_proneness_scale; //Error-proneness of the code smell
 	
-	CodeSmell(String name,String concerns_names[],int error_proneness_scale)
+	CodeSmell(String name,String concerns_names[],String error_proneness_scale)
 	{
 		setName(name);
 		setConcernsNames(concerns_names);
@@ -35,12 +35,12 @@ abstract class CodeSmell
 		return concerns_names;
 	}
 	
-	private void setErrorPronenessScale(int error_proneness_scale)
+	private void setErrorPronenessScale(String error_proneness_scale)
 	{
 		this.error_proneness_scale=error_proneness_scale;
 	}
 	
-	public int getErrorPronenessScale()
+	public String getErrorPronenessScale()
 	{
 		return error_proneness_scale;
 	}

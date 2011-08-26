@@ -7,6 +7,7 @@ Bundle-Activator: ufmg.crcs.ConcernReCS
 Bundle-Vendor: UFMG
 Require-Bundle: org.eclipse.ui,
  org.eclipse.core.runtime,
- ca.mcgill.cs.serg.cm;bundle-version="2.0.3"
+ ca.mcgill.cs.serg.cm;bundle-version="2.0.3",
+ org.eclipse.jdt.core;bundle-version="3.7.0"
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6
 Bundle-ActivationPolicy: lazy
