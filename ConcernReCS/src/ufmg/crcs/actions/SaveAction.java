@@ -1,4 +1,13 @@
-//An action to save the found code smells
+/**
+ * Federal University of Minas Gerais 
+ * Department of Computer Science
+ * ConcernReCS Project
+ *
+ * Created by Pericles Alves
+ * Date: 01/08/2011
+ */
+
+/**An action to save the found code smells*/
 
 package ufmg.crcs.actions;
 

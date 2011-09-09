@@ -1,4 +1,13 @@
-//Main ConcernReCS view, to show the found code smells
+/**
+ * Federal University of Minas Gerais 
+ * Department of Computer Science
+ * ConcernReCS Project
+ *
+ * Created by Pericles Alves
+ * Date: 01/08/2011
+ */
+
+/**Main ConcernReCS view, to show the found code smells*/
 
 package ufmg.crcs.views;
 
@@ -16,7 +25,7 @@ import ufmg.crcs.actions.*;
 
 public class ConcernReCSView extends ViewPart 
 {
-	//The ID of the view
+	/**The ID of the view*/
 	public static final String ID = "ufmg.crcs.views.ConcernReCSView";
 
 	private TableViewer viewer;

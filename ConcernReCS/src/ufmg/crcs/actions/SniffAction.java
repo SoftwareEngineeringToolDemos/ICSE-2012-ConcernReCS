@@ -1,4 +1,13 @@
-//An action to find code smells in source code
+/**
+ * Federal University of Minas Gerais 
+ * Department of Computer Science
+ * ConcernReCS Project
+ *
+ * Created by Pericles Alves
+ * Date: 01/08/2011
+ */
+
+/**An action to find code smells in source code*/
 
 package ufmg.crcs.actions;
 

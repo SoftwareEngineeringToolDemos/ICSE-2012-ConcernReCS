@@ -1,6 +1,15 @@
-//Class to represent a set of concern parts which can be refactored to the same advice
+/**
+ * Federal University of Minas Gerais 
+ * Department of Computer Science
+ * ConcernReCS Project
+ *
+ * Created by Pericles Alves
+ * Date: 01/08/2011
+ */
 
-package ufmg.crcs.smells;
+/**Class to represent a set of concern parts which can be refactored to the same advice*/
+
+package ufmg.crcs.smells.refactoringprojection;
 
 import org.eclipse.jdt.core.search.SearchMatch;
 import java.util.*;
