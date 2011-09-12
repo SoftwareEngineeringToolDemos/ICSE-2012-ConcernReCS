@@ -43,7 +43,7 @@ public class SniffAction extends Action
 			/**/Set<Object> setelements=ConcernMapper.getDefault().getConcernModel().getElements(concernnames[j]);
 			/**/Object[] elements=setelements.toArray();		
 			int i;
-			for(i=0;i<elements.length;i++)showMessage(" "+((IJavaElement)elements[i]).getElementName());
+			for(i=0;i<elements.length;i++)showMessage(" "+((IJavaElement)elements[i]).getElementName()+" "+((IJavaElement)elements[i]).getElementType());
 		}
 		
 		showMessage("Sniff action executed");

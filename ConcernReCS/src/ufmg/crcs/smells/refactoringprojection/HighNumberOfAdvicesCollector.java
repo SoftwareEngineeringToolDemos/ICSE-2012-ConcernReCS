@@ -51,6 +51,6 @@ class HighNumberOfAdvicesCollector extends CodeSmellCollector
 				}
 				*/
 			}
-		}
+		}return null;
 	}
 }
