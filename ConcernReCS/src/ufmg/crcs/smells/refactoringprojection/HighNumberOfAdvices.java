@@ -18,7 +18,7 @@ import ufmg.crcs.smells.CodeSmell;
 
 class HighNumberOfAdvices extends CodeSmell
 {	
-	ArrayList<AdviceMatch> advices; /**Advices which compose the High number of advices code smell*/
+	ArrayList<AdviceMatch> advices; //Advices which compose the High number of advices code smell
 	
 	/**Initializes the code smell with a constant value for the name and error_proneness_scale*/
 	HighNumberOfAdvices(String concerns_names[],ArrayList<AdviceMatch> advices)

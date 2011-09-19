@@ -13,9 +13,9 @@ package ufmg.crcs.smells;
 
 public class CodeSmellCollector 
 {
-	protected final int field=8; //Constant value used by Java Model to identify a field
-	protected final int method=9; //Constant value used by Java Model to identify a method
-	protected CodeSmell acodesmell; /**Code smell found in the source code*/
+	protected final int field=8; //Constant value used by the Java Model to identify a field
+	protected final int method=9; //Constant value used by the Java Model to identify a method
+	protected CodeSmell acodesmell; //Code smell found in the source code
 	
 	/**@return the code smell if it has been found in the selected concerns
 	 * @param concerns in which the code smell should be sought*/

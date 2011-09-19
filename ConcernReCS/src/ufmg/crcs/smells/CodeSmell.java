@@ -13,9 +13,9 @@ package ufmg.crcs.smells;
 
 public abstract class CodeSmell 
 {
-	private String name; /**The name of the code smell*/
-	private String concerns_names[]; /**Names of the concerns related to the code smell*/
-	private int error_proneness_scale; /**Error-proneness of the code smell*/
+	private String name; //The name of the code smell
+	private String concerns_names[]; //Names of the concerns related to the code smell
+	private int error_proneness_scale; //Error-proneness of the code smell
 	
 	protected CodeSmell(String name,String concerns_names[],int error_proneness_scale)
 	{
