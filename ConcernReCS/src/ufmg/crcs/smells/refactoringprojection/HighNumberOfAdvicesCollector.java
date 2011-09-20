@@ -36,7 +36,7 @@ class HighNumberOfAdvicesCollector extends CodeSmellCollector
 	
 			//Determines the advices needed to refactor the accesses to an concern element
 			for(IJavaElement element:elements)
-			{
+			{/**@to_be_completed
 				//If the element is a method
 				if(element.getElementType()==method)
 				{
@@ -48,7 +48,7 @@ class HighNumberOfAdvicesCollector extends CodeSmellCollector
 				{
 			
 				}
-			}
+			*/}
 		}
 	}
 }
