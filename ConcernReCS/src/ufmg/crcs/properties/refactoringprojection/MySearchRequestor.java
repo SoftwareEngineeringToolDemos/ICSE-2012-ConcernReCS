@@ -33,8 +33,8 @@ class MySearchRequestor extends SearchRequestor
 	/**Collect an accurate search match*/
 	public void acceptSearchMatch(SearchMatch match)
 	{
-		//Verifies if an accepted search match is accurate, if so, the search match is stored
-		if(match.getAccuracy()==SearchMatch.A_ACCURATE)
+		//Verifies if an accepted search match is accurate and has an known source, if so, the search match is stored
+		if((match.getAccuracy()==SearchMatch.A_ACCURATE)&&(match.getOffset()!=-1)&&(match.getLength()!=-1))
 			searchmatches.add(match);
 	}
 }

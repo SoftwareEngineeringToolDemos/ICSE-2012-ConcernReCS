@@ -22,6 +22,7 @@ import org.eclipse.jface.dialogs.MessageDialog;
 /**/import org.eclipse.core.resources.*;
 /**/import org.eclipse.jdt.core.search.*;
 /**/import ufmg.crcs.properties.refactoringprojection.*;
+/**/import org.eclipse.jdt.core.dom.*;
 
 public class SniffAction extends Action
 {
@@ -60,13 +61,11 @@ public class SniffAction extends Action
 							
 					ArrayList<SearchMatch> matches=SearchMatchesCollector.getMatches((IJavaElement)elements[i]);
 					
-					for(SearchMatch match:matches)
+					ArrayList<CompilationUnit> asts=ASTCreator.getASTs(matches);
+					
+					for(CompilationUnit ast:asts)
 					{
-						
-						//ICompilationUnit compilatiounit=JavaCore.createCompilationUnitFrom((IFile)match.getResource());
-						
-						showMessage(" "+((IJavaElement)elements[i]).getElementName()+
-								" "+((IJavaElement)elements[i]).getElementType()+" "+match.toString());
+						showMessage(""+ast.toString());
 					}
 				}
 			}

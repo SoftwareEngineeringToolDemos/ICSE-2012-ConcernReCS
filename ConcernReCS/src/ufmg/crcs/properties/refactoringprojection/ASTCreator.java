@@ -23,14 +23,14 @@ public abstract class ASTCreator
 	 * @param The matches from which the ASTs should be created
 	 * @return The related ASTs
 	 */
-	public ArrayList<CompilationUnit> getASTs(ArrayList<SearchMatch> matches)
+	public static ArrayList<CompilationUnit> getASTs(ArrayList<SearchMatch> matches)
 	{
 		ArrayList<CompilationUnit> asts=new ArrayList<CompilationUnit>(); //The ASTs of the given matches
 		
 		//Creates the AST for each search match
 		for(SearchMatch match:matches)
 		{
-			IJavaElement source=getSource((IJavaElement)match.getElement()); //The source of the search match
+			IJavaElement source=getSource((IJavaElement)match.getElement()); //The source of the current search match
 			
 			ASTParser parser = ASTParser.newParser(AST.JLS3); //AST parser
 		
@@ -45,16 +45,18 @@ public abstract class ASTCreator
 			}
 			
 			parser.setSourceRange(match.getOffset(), match.getLength()); //Sets the range of the AST
-			
+				
 			asts.add((CompilationUnit)parser.createAST(null)); //Stores the AST
 		}
+		
+		return asts;
 	}
 	
 	/**Get the source of a given Java element
 	 * @param The element from which the source should be extracted
 	 * @return The source of the given element
 	 */
-	private IJavaElement getSource(IJavaElement element)
+	private static IJavaElement getSource(IJavaElement element)
 	{
 		IJavaElement source; //The source of the given element
 		
@@ -63,7 +65,7 @@ public abstract class ASTCreator
 		//Get the ICompilationUnit or the IClassFile related to the source of the given element
 		while((!(source instanceof ICompilationUnit))&&(!(source instanceof IClassFile))&&(source!=null))
 		{
-			source=element.getParent();
+			source=source.getParent();
 		}
 		
 		return source;
