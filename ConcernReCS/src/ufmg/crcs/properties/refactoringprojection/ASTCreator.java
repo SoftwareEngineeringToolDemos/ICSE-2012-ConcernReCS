@@ -23,9 +23,9 @@ public abstract class ASTCreator
 	 * @param The matches from which the ASTs should be created
 	 * @return The related ASTs
 	 */
-	public static ArrayList<CompilationUnit> getASTs(ArrayList<SearchMatch> matches)
+	public static ArrayList<Expression> getASTs(ArrayList<SearchMatch> matches)
 	{
-		ArrayList<CompilationUnit> asts=new ArrayList<CompilationUnit>(); //The ASTs of the given matches
+		ArrayList<Expression> asts=new ArrayList<Expression>(); //The ASTs of the given matches
 		
 		//Creates the AST for each search match
 		for(SearchMatch match:matches)
@@ -44,9 +44,11 @@ public abstract class ASTCreator
 				parser.setSource((IClassFile)source);
 			}
 			
+			parser.setKind(ASTParser.K_EXPRESSION); //Sets the kind of the ast
+			
 			parser.setSourceRange(match.getOffset(), match.getLength()); //Sets the range of the AST
 				
-			asts.add((CompilationUnit)parser.createAST(null)); //Stores the AST
+			asts.add((Expression)parser.createAST(null)); //Stores the AST
 		}
 		
 		return asts;

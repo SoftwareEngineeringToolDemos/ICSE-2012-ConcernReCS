@@ -61,9 +61,9 @@ public class SniffAction extends Action
 							
 					ArrayList<SearchMatch> matches=SearchMatchesCollector.getMatches((IJavaElement)elements[i]);
 					
-					ArrayList<CompilationUnit> asts=ASTCreator.getASTs(matches);
+					ArrayList<Expression> asts=ASTCreator.getASTs(matches);
 					
-					for(CompilationUnit ast:asts)
+					for(Expression ast:asts)
 					{
 						showMessage(""+ast.toString());
 					}
