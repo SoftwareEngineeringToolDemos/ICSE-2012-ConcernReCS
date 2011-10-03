@@ -21,6 +21,7 @@ import org.eclipse.jface.dialogs.MessageDialog;
 /**/import org.eclipse.jdt.core.*;
 /**/import org.eclipse.core.resources.*;
 /**/import org.eclipse.jdt.core.search.*;
+/**/import ufmg.crcs.actions.test.GenericVisitor;
 /**/import ufmg.crcs.properties.refactoringprojection.*;
 /**/import org.eclipse.jdt.core.dom.*;
 
@@ -56,8 +57,8 @@ public class SniffAction extends Action
 				
 				for(i=0;i<elements.length;i++)
 				{	
-					showMessage(" "+((IJavaElement)elements[i]).getElementName()+
-							" "+((IJavaElement)elements[i]).getElementType());
+					//showMessage(" "+((IJavaElement)elements[i]).getElementName()+
+							//" "+((IJavaElement)elements[i]).getElementType());
 							
 					ArrayList<SearchMatch> matches=SearchMatchesCollector.getMatches((IJavaElement)elements[i]);
 					
@@ -65,7 +66,13 @@ public class SniffAction extends Action
 					
 					for(Expression ast:asts)
 					{
-						showMessage(""+ast.toString());
+						//showMessage(""+ast.toString());
+						
+						GenericVisitor visitor=new GenericVisitor();
+						
+						visitor.setViewer(viewer);
+						
+						ast.accept(visitor);
 					}
 				}
 			}
