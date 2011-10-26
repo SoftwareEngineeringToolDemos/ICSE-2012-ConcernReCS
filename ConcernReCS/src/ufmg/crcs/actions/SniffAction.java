@@ -24,7 +24,6 @@ import org.eclipse.jface.dialogs.MessageDialog;
 /**/import ufmg.crcs.actions.test.GenericVisitor;
 /**/import ufmg.crcs.properties.*;
 /**/import ufmg.crcs.smells.*;
-/**/import ufmg.crcs.smells.duplicatedcrosscuttingcode.*;
 
 import org.eclipse.jdt.core.dom.*;
 
