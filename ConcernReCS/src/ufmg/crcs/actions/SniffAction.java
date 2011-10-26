@@ -22,8 +22,11 @@ import org.eclipse.jface.dialogs.MessageDialog;
 /**/import org.eclipse.core.resources.*;
 /**/import org.eclipse.jdt.core.search.*;
 /**/import ufmg.crcs.actions.test.GenericVisitor;
-/**/import ufmg.crcs.properties.refactoringprojection.*;
-/**/import org.eclipse.jdt.core.dom.*;
+/**/import ufmg.crcs.properties.*;
+/**/import ufmg.crcs.smells.*;
+/**/import ufmg.crcs.smells.duplicatedcrosscuttingcode.*;
+
+import org.eclipse.jdt.core.dom.*;
 
 public class SniffAction extends Action
 {
@@ -41,41 +44,51 @@ public class SniffAction extends Action
 	public void run() 
 	{
 		/**@test*/
-		{
-	
-			String concernnames[]=ConcernMapper.getDefault().getConcernModel().getConcernNames();
-		
-			int j;
+		{		
+			String concern_names[]=ConcernMapper.getDefault().getConcernModel().getConcernNames();
+
+			DedicatedImplementationConstantCollector collector= new DedicatedImplementationConstantCollector();
 			
-			for(j=0;j<concernnames.length;j++)
+			ArrayList <CodeSmell> code_smells=collector.getCodeSmells(concern_names);
+			
+			for(CodeSmell smell:code_smells)
 			{
-				Set<Object> setelements=ConcernMapper.getDefault().getConcernModel().getElements(concernnames[j]);
-				
-				Object[] elements=setelements.toArray();		
-				
-				int i;
-				
-				for(i=0;i<elements.length;i++)
-				{	
-					//showMessage(" "+((IJavaElement)elements[i]).getElementName()+
-							//" "+((IJavaElement)elements[i]).getElementType());
-							
-					ArrayList<SearchMatch> matches=SearchMatchesCollector.getMatches((IJavaElement)elements[i]);
-					
-					ArrayList<Expression> asts=ASTCreator.getASTs(matches);
-					
-					for(Expression ast:asts)
-					{
-						//showMessage(""+ast.toString());
-						
-						GenericVisitor visitor=new GenericVisitor();
-						
-						visitor.setViewer(viewer);
-						
-						ast.accept(visitor);
-					}
-				}
+				showMessage("Concern: "+smell.getConcern()+"\n"+"Mistake: "+smell.getMistake()+"\n"+"Smell: "+smell.getName()+"\n"+"Source: "+smell.getSource()+"\n"+
+						"Element: "+smell.getWhere()+"\n"+"Error proneness: "+smell.getErrorProneness());
 			}
+			
+			
+//			int j;
+//			
+//			for(j=0;j<concernnames.length;j++)
+//			{
+//				Set<Object> setelements=ConcernMapper.getDefault().getConcernModel().getElements(concernnames[j]);
+//				
+//				Object[] elements=setelements.toArray();		
+//				
+//				int i;
+//				
+//				for(i=0;i<elements.length;i++)
+//				{	
+//					showMessage(" "+((IJavaElement)elements[i]).getElementName()+
+//							" "+((IJavaElement)elements[i]).getElementType());
+//							
+//					ArrayList<SearchMatch> matches=SearchMatchesCollector.getMatches((IJavaElement)elements[i]);
+//					
+//					ArrayList<Expression> asts=ASTCreator.getASTs(matches);
+//					
+//					for(Expression ast:asts)
+//					{
+//						//showMessage(""+ast.toString());
+//						
+//						GenericVisitor visitor=new GenericVisitor();
+//						
+//						visitor.setViewer(viewer);
+//						
+//						ast.accept(visitor);
+//					}
+//				}
+//			}
 		}
 		
 		showMessage("Sniff action executed");

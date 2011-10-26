@@ -9,7 +9,7 @@
 
 /**Class responsible for finding references to fields and methods*/
 
-package ufmg.crcs.properties.refactoringprojection;
+package ufmg.crcs.properties;
 
 import java.util.*;
 import org.eclipse.core.runtime.CoreException;

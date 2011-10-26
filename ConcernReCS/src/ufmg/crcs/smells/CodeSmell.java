@@ -14,14 +14,20 @@ package ufmg.crcs.smells;
 public abstract class CodeSmell 
 {
 	private String name; //The name of the code smell
-	private String concerns_names[]; //Names of the concerns related to the code smell
-	private int error_proneness_scale; //Error-proneness of the code smell
+	private String mistake; //The mistake that the smell can lead
+	private String concern; //Name of the concern related to the code smell
+	private double error_proneness; //Error-proneness of the code smell
+	private String source; //File in which the code smell was found
+	private String where; //Where this code smells was found
 	
-	protected CodeSmell(String name,String concerns_names[],int error_proneness_scale)
+	protected CodeSmell(String name,String mistake,String concern,double error_proneness,String source,String where)
 	{
 		setName(name);
-		setConcernsNames(concerns_names);
-		setErrorPronenessScale(error_proneness_scale);
+		setMistake(mistake);
+		setConcern(concern);
+		setErrorProneness(error_proneness);
+		setSource(source);
+		setWhere(where);
 	}
 	
 	private void setName(String name)
@@ -34,23 +40,53 @@ public abstract class CodeSmell
 		return name;
 	}
 	
-	private void setConcernsNames(String concerns_names[])
+	private void setMistake(String mistake)
 	{
-		this.concerns_names=concerns_names;
+		this.mistake=mistake;
 	}
 	
-	public String[] getConcernsNames()
+	public String getMistake()
 	{
-		return concerns_names;
+		return mistake;
 	}
 	
-	private void setErrorPronenessScale(int error_proneness_scale)
+	private void setConcern(String concern)
 	{
-		this.error_proneness_scale=error_proneness_scale;
+		this.concern=concern;
 	}
 	
-	public int getErrorPronenessScale()
+	public String getConcern()
 	{
-		return error_proneness_scale;
+		return concern;
+	}
+	
+	private void setErrorProneness(double error_proneness)
+	{
+		this.error_proneness=error_proneness;
+	}
+	
+	public double getErrorProneness()
+	{
+		return error_proneness;
+	}
+	
+	private void setSource(String source)
+	{
+		this.source=source;
+	}
+	
+	public String getSource()
+	{
+		return source;
+	}
+	
+	private void setWhere(String where)
+	{
+		this.where=where;
+	}
+	
+	public String getWhere()
+	{
+		return where;
 	}
 }

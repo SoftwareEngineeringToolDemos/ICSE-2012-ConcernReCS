@@ -9,7 +9,7 @@
 
 /**class responsible to request search matches*/
 
-package ufmg.crcs.properties.refactoringprojection;
+package ufmg.crcs.properties;
 
 import java.util.*;
 import org.eclipse.jdt.core.search.*;

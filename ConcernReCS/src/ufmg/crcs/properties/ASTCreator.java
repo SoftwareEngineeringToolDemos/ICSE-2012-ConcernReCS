@@ -9,7 +9,7 @@
 
 /**class responsible to crate ASTs from different sources*/
 
-package ufmg.crcs.properties.refactoringprojection;
+package ufmg.crcs.properties;
 
 import java.util.ArrayList;
 import org.eclipse.jdt.core.*;
