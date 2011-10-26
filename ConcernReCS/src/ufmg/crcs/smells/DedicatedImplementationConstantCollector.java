@@ -9,13 +9,11 @@
 
 /**The class responsible to find the Dedicated implementation constant code smell in the source code*/
 
-package ufmg.crcs.smells.duplicatedcrosscuttingcode;
+package ufmg.crcs.smells;
 
 import java.util.ArrayList;
 import java.util.Set;
 
-import ufmg.crcs.smells.CodeSmell;
-import ufmg.crcs.smells.CodeSmellCollector;
 import ca.mcgill.cs.serg.cm.ConcernMapper;
 import org.eclipse.jdt.core.IJavaElement;
 import org.eclipse.jdt.core.IField;

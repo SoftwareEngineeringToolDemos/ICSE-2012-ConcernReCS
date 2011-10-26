@@ -9,9 +9,8 @@
 
 /**Class for the Dedicated implementation constant code smell*/
 
-package ufmg.crcs.smells.duplicatedcrosscuttingcode;
+package ufmg.crcs.smells;
 
-import ufmg.crcs.smells.CodeSmell;
 
 
 class DedicatedImplementationConstant extends CodeSmell
