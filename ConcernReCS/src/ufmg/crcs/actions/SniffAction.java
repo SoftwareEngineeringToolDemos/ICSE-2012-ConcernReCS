@@ -16,16 +16,9 @@ import org.eclipse.ui.ISharedImages;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.jface.viewers.TableViewer;
 import org.eclipse.jface.dialogs.MessageDialog;
-/**/import ca.mcgill.cs.serg.cm.ConcernMapper;
 /**/import java.util.*;
-/**/import org.eclipse.jdt.core.*;
-/**/import org.eclipse.core.resources.*;
-/**/import org.eclipse.jdt.core.search.*;
-/**/import ufmg.crcs.actions.test.GenericVisitor;
-/**/import ufmg.crcs.properties.*;
 /**/import ufmg.crcs.smells.*;
-
-import org.eclipse.jdt.core.dom.*;
+/**/import ufmg.crcs.concernmapper.*;
 
 public class SniffAction extends Action
 {
@@ -44,7 +37,7 @@ public class SniffAction extends Action
 	{
 		/**@test*/
 		{		
-			String concern_names[]=ConcernMapper.getDefault().getConcernModel().getConcernNames();
+			String concern_names[]=ConcernMapperInterface.getConcernNames();
 
 			DedicatedImplementationConstantCollector collector= new DedicatedImplementationConstantCollector();
 			

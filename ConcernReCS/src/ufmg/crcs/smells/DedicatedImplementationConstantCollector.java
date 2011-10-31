@@ -12,16 +12,18 @@
 package ufmg.crcs.smells;
 
 import java.util.ArrayList;
-import java.util.Set;
 
-import ca.mcgill.cs.serg.cm.ConcernMapper;
 import org.eclipse.jdt.core.IJavaElement;
 import org.eclipse.jdt.core.IField;
 import org.eclipse.jdt.core.JavaModelException;
 
+import ufmg.crcs.concernmapper.*;
+
 public class DedicatedImplementationConstantCollector extends CodeSmellCollector
 {
-	/**@return the code smells if them have been found in the selected concerns or null otherwise*/
+	/**
+	 * @return the code smells if them have been found in the selected concerns or null otherwise
+	 */
 	public ArrayList <CodeSmell> getCodeSmells(String[] concerns)
 	{
 		codesmells=findDedicatedImplementationConstant(concerns);
@@ -37,20 +39,20 @@ public class DedicatedImplementationConstantCollector extends CodeSmellCollector
 		//Looks for the Dedicated implementation constant code smell in each of the selected concerns
 		for(String concern:concerns)
 		{
-			Object[] concern_elements=ConcernMapper.getDefault().getConcernModel().getElements(concern).toArray(); //Elements in the concern
+			IJavaElement[] concern_elements=ConcernMapperInterface.getConcernElements(concern); //Elements added to the ConcernMapper plug-in
 			
 			//Looks for the code smells in all the elements of the concern
-			for(Object element:concern_elements)
+			for(IJavaElement element:concern_elements)
 			{	
 				try
 				{
 					//If the element is a constant class field
-					if(((IJavaElement)element).getElementType()==field)
+					if(element.getElementType()==field)
 					{
 						if(((IField)element).getConstant()!=null)
 						{
-							String source=((IJavaElement)element).getResource().getName(); //File in which this element is declared
-							String where="Field "+((IJavaElement)element).getElementName(); //Which of the file elements this element is
+							String source=element.getResource().getName(); //File in which this element is declared
+							String where="Field "+element.getElementName(); //Which of the file elements this element is
 						
 							DedicatedImplementationConstant smell=new DedicatedImplementationConstant(concern,source,where);
 						
