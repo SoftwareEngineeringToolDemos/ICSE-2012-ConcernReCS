@@ -4,22 +4,24 @@
  * ConcernReCS Project
  *
  * Created by Pericles Alves
- * Date: 01/08/2011
+ * Date: 08/01/2011
  */
 
-/**ConcernReCS is a plug-in to find code smells in order to guide concerns refactoring*/
+/**ConcernReCS is a plug-in to find Concern Refactoring Code Smells*/
 
 package ufmg.crcs;
 
 import org.eclipse.ui.plugin.AbstractUIPlugin;
 import org.osgi.framework.BundleContext;
 
-/**The activator class controls the plug-in life cycle*/
+/**
+ * The activator class controls the plug-in life cycle
+ */
 public class ConcernReCS extends AbstractUIPlugin 
 {
-	public static final String PLUGIN_ID = "ufmg.crcs"; /**The plug-in ID*/
+	public static final String PLUGIN_ID = "ufmg.crcs"; //The plug-in ID
 
-	private static ConcernReCS plugin; /**The shared instance*/
+	private static ConcernReCS plugin; //The shared instance
 	
 	public ConcernReCS() 
 	{
@@ -37,7 +39,9 @@ public class ConcernReCS extends AbstractUIPlugin
 		super.stop(context);
 	}
 
-	/**@return the shared instance*/
+	/**
+	 * @return the shared instance
+	 */
 	public static ConcernReCS getDefault() 
 	{
 		return plugin;

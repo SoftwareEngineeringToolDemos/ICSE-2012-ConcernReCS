@@ -4,12 +4,14 @@
  * ConcernReCS Project
  *
  * Created by Pericles Alves
- * Date: 31/10/2011
+ * Date: 10/31/2011
  */
 
 /**This class works as interface between ConcernReCS and the ConcernMapper plug-in*/
 
 package ufmg.crcs.concernmapper;
+
+import java.util.*;
 
 import ca.mcgill.cs.serg.cm.*;
 import org.eclipse.jdt.core.*;
@@ -19,12 +21,20 @@ public abstract class ConcernMapperInterface
 	/**
 	 * @return the names of all the concerns
 	 */
-	public static String[] getConcernNames()
+	public static ArrayList<String> getConcernNames()
 	{
-		String[] concerns; //Concerns added to the ConcernMapper plug-in
+		String[] concerns_array; //Concerns names obtained from the ConcernMapper
 		
-		concerns=ConcernMapper.getDefault().getConcernModel().getConcernNames();
+		ArrayList<String> concerns=new ArrayList<String>(); //Resulting list of concerns names
+		
+		concerns_array=ConcernMapper.getDefault().getConcernModel().getConcernNames();
 	
+		//Converts the array of concerns names to an ArrayList
+		for(String concern:concerns_array)
+		{
+			concerns.add(concern);
+		}
+		
 		return concerns;
 	}
 	
@@ -33,7 +43,7 @@ public abstract class ConcernMapperInterface
 	 * @param concern
 	 * @return an array with the elements
 	 */
-	public static IJavaElement[] getConcernElements(String concern)
+	public static ArrayList<IJavaElement> getConcernElements(String concern)
 	{
 		int i; //Iterator
 		
@@ -41,12 +51,12 @@ public abstract class ConcernMapperInterface
 		
 		obj_elements=ConcernMapper.getDefault().getConcernModel().getElements(concern).toArray();
 
-		IJavaElement[] elements=new IJavaElement[obj_elements.length]; //Elements of the given concern as Java elements
+		ArrayList<IJavaElement> elements=new ArrayList<IJavaElement>(); //Elements of the given concern as Java elements
 		
 		//Converts each element in the concern from type Object to IJavaElement
 		for(i=0;i<obj_elements.length;i++)
 		{
-			elements[i]=(IJavaElement)obj_elements[i];
+			elements.add((IJavaElement)obj_elements[i]);
 		}
 		
 		return elements;

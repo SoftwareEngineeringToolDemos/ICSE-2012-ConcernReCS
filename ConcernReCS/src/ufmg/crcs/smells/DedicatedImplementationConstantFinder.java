@@ -4,7 +4,7 @@
  * ConcernReCS Project
  *
  * Created by Pericles Alves
- * Date: 14/10/2011
+ * Date: 10/14/2011
  */
 
 /**The class responsible to find the Dedicated implementation constant code smell in the source code*/
@@ -19,27 +19,26 @@ import org.eclipse.jdt.core.JavaModelException;
 
 import ufmg.crcs.concernmapper.*;
 
-public class DedicatedImplementationConstantCollector extends CodeSmellCollector
+public class DedicatedImplementationConstantFinder extends CodeSmellFinder
 {
-	/**
-	 * @return the code smells if them have been found in the selected concerns or null otherwise
-	 */
-	public ArrayList <CodeSmell> getCodeSmells(String[] concerns)
+	private static final String CODE_SMELL_NAME="Dedicated Implementation Constant";
+	
+	public DedicatedImplementationConstantFinder()
 	{
-		codesmells=findDedicatedImplementationConstant(concerns);
-		
-		return codesmells;
+		super(CODE_SMELL_NAME);
 	}
-
-	/**Implements the algorithm to find the Dedicated implementation constant code smell*/
-	private ArrayList <CodeSmell> findDedicatedImplementationConstant(String[] concerns)
+	
+	/**
+	 * Implements the algorithm to find the Dedicated implementation constant code smell
+	 */
+	protected ArrayList <CodeSmell> findCodeSmells(ArrayList<String> concerns)
 	{
 		ArrayList <CodeSmell> code_smells=new ArrayList <CodeSmell>();
 		
 		//Looks for the Dedicated implementation constant code smell in each of the selected concerns
 		for(String concern:concerns)
 		{
-			IJavaElement[] concern_elements=ConcernMapperInterface.getConcernElements(concern); //Elements added to the ConcernMapper plug-in
+			ArrayList<IJavaElement> concern_elements=ConcernMapperInterface.getConcernElements(concern); //Elements added to the ConcernMapper plug-in
 			
 			//Looks for the code smells in all the elements of the concern
 			for(IJavaElement element:concern_elements)

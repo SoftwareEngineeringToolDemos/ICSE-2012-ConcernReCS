@@ -4,7 +4,7 @@
  * ConcernReCS Project
  *
  * Created by Pericles Alves
- * Date: 23/09/2011
+ * Date: 09/23/2011
  */
 
 /**class responsible to crate ASTs from different sources*/
@@ -12,18 +12,20 @@
 package ufmg.crcs.properties;
 
 import java.util.ArrayList;
+
 import org.eclipse.jdt.core.*;
 import org.eclipse.jdt.core.search.*;
 import org.eclipse.jdt.core.dom.*;
 
 
-public abstract class ASTCreator 
+public class ASTCreator 
 {
-	/**Generates the ASTs for a list of search matches
+	/**
+	 * Generates the ASTs for a list of search matches
 	 * @param The matches from which the ASTs should be created
 	 * @return The related ASTs
 	 */
-	public static ArrayList<Expression> getASTs(ArrayList<SearchMatch> matches)
+	public ArrayList<Expression> getASTs(ArrayList<SearchMatch> matches)
 	{
 		ArrayList<Expression> asts=new ArrayList<Expression>(); //The ASTs of the given matches
 		
@@ -54,11 +56,12 @@ public abstract class ASTCreator
 		return asts;
 	}
 	
-	/**Get the source of a given Java element
+	/**
+	 * Gets the source of a given Java element
 	 * @param The element from which the source should be extracted
 	 * @return The source of the given element
 	 */
-	private static IJavaElement getSource(IJavaElement element)
+	private IJavaElement getSource(IJavaElement element)
 	{
 		IJavaElement source; //The source of the given element
 		

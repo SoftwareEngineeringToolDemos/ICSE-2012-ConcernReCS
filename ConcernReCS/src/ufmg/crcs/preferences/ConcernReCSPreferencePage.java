@@ -4,12 +4,16 @@
  * ConcernReCS Project
  *
  * Created by Pericles Alves
- * Date: 27/10/2011
+ * Date: 10/27/2011
  */
 
-/**The class responsible to show the ConcerReCS preference page*/
+/**
+ * Class responsible to show the ConcerReCS preference page
+ */
 
 package ufmg.crcs.preferences;
+
+import java.util.*;
 
 import org.eclipse.jface.preference.*;
 import org.eclipse.swt.layout.GridData;
@@ -20,6 +24,7 @@ import org.eclipse.ui.IWorkbench;
 
 import ufmg.crcs.ConcernReCS;
 import ufmg.crcs.concernmapper.*;
+import ufmg.crcs.smells.*;
 
 public class ConcernReCSPreferencePage	extends FieldEditorPreferencePage implements IWorkbenchPreferencePage 
 {
@@ -37,7 +42,10 @@ public class ConcernReCSPreferencePage	extends FieldEditorPreferencePage impleme
 	 */
 	public void createFieldEditors() 
 	{	
-		String[] concerns=ConcernMapperInterface.getConcernNames(); //Concerns added to the ConcernMapper plug-in
+		CodeSmellsCollector collector=new CodeSmellsCollector(); //Collector which will provide the names of the Code Smells
+		
+		ArrayList<String> concerns=ConcernMapperInterface.getConcernNames(); //Concerns added to the ConcernMapper
+		ArrayList<String> smells_names=collector.getSmellsNames(); //Names of all kinds of Code Smells
 		
 		//Creates the label for the concern filter area
 		addField(new LabelFieldEditor(
@@ -48,10 +56,21 @@ public class ConcernReCSPreferencePage	extends FieldEditorPreferencePage impleme
 		for(String concern:concerns)
 		{	
 			addField(new BooleanFieldEditor(concern,concern,getFieldEditorParent()));
-			
-			//Sets all the default values as "true"
-			PreferenceInitializer.initializeDefaultPreferences(true);
 		}
+		
+		//Creates the label for the Code Smells filter area
+		addField(new LabelFieldEditor(
+			"\nConcern Refactoring Code Smells which will be sought in the code", 
+			getFieldEditorParent() ) );
+				
+		//Creates the Code Smells filter area, i.e.,  a boolean field for each Code Smell 
+		for(String smell:smells_names)
+		{	
+			addField(new BooleanFieldEditor(smell,smell,getFieldEditorParent()));
+		}
+		
+		//Sets all the default values as "true"
+		PreferenceInitializer.initializeDefaultPreferences(true);
 	}
 
 	/**
