@@ -7,91 +7,135 @@
  * Date: 08/01/2011
  */
 
-/**Main ConcernReCS view, to show the found code smells*/
+/**Main ConcernReCS view, to show the found Code Smells*/
 
 package ufmg.crcs.views;
 
-import org.eclipse.swt.widgets.Composite;
-import org.eclipse.ui.part.*;
-import org.eclipse.jface.viewers.*;
-import org.eclipse.swt.graphics.Image;
 import org.eclipse.jface.action.*;
-import org.eclipse.jface.dialogs.MessageDialog;
-import org.eclipse.ui.*;
-import org.eclipse.swt.widgets.Menu;
+import org.eclipse.jface.viewers.ArrayContentProvider;
+import org.eclipse.jface.viewers.ColumnLabelProvider;
+import org.eclipse.jface.viewers.TableViewer;
+import org.eclipse.jface.viewers.TableViewerColumn;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.events.KeyAdapter;
+import org.eclipse.swt.events.KeyEvent;
+import org.eclipse.swt.events.SelectionAdapter;
+import org.eclipse.swt.events.SelectionEvent;
+import org.eclipse.swt.layout.GridData;
+import org.eclipse.swt.layout.GridLayout;
+import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Label;
+import org.eclipse.swt.widgets.Menu;
+import org.eclipse.swt.widgets.Table;
+import org.eclipse.swt.widgets.TableColumn;
+import org.eclipse.swt.widgets.Text;
+import org.eclipse.ui.IActionBars;
+import org.eclipse.ui.IWorkbenchActionConstants;
+import org.eclipse.ui.part.ViewPart;
 
 import ufmg.crcs.actions.*;
+import ufmg.crcs.smells.*;
 
 public class ConcernReCSView extends ViewPart 
-{
-	/**The ID of the view*/
-	public static final String ID = "ufmg.crcs.views.ConcernReCSView";
+{	
+	public static final String ID = "ufmg.crcs.views.ConcernReCSView"; //The ID of the view
 
-	private TableViewer viewer;
+	private ConcernReCSViewerComparator comparator; //The table sorter
+	
+	private TableViewer viewer; //Main viewer of the view
+	private CodeSmellFilter filter; //Filter for the search field
 	private SniffAction sniffaction;
 	private SaveAction saveaction;
-	private Action doubleClickAction;
-	 
-	class ViewContentProvider implements IStructuredContentProvider 
-	{
-		public void inputChanged(Viewer v, Object oldInput, Object newInput) 
-		{
-		}
-		
-		public void dispose() 
-		{
-		}
-		
-		public Object[] getElements(Object parent) 
-		{
-			return new String[] { "Code Smell A", "Code Smell B", "Code Smell C" };
-		}
-	}
+	private SaveAsAction saveasaction;
 	
-	class ViewLabelProvider extends LabelProvider implements ITableLabelProvider 
-	{
-		public String getColumnText(Object obj, int index) 
-		{
-			return getText(obj);
-		}
-		
-		public Image getColumnImage(Object obj, int index) 
-		{
-			return getImage(obj);
-		}
-		
-		public Image getImage(Object obj) 
-		{
-			return PlatformUI.getWorkbench().
-					getSharedImages().getImage(ISharedImages.IMG_OBJ_ELEMENT);
-		}
-	}
-	
-	class NameSorter extends ViewerSorter 
-	{
-	}
-
-	public ConcernReCSView() 
-	{
-	}
-
+	/**
+	 * Creates the layout of the view
+	 */
 	public void createPartControl(Composite parent) 
 	{
-		viewer = new TableViewer(parent, SWT.MULTI | SWT.H_SCROLL | SWT.V_SCROLL);
-		viewer.setContentProvider(new ViewContentProvider());
-		viewer.setLabelProvider(new ViewLabelProvider());
-		viewer.setSorter(new NameSorter());
-		viewer.setInput(getViewSite());
+		//Sets the layout
+		GridLayout layout = new GridLayout(2, false);
+		parent.setLayout(layout);
+		
+		//Creates the search field
+		Label search_label = new Label(parent, SWT.NONE);
+		search_label.setText("Search: ");
+		final Text search_text = new Text(parent, SWT.BORDER | SWT.SEARCH);
+		search_text.setLayoutData(new GridData(GridData.GRAB_HORIZONTAL | GridData.HORIZONTAL_ALIGN_FILL));
+		
+		createViewer(parent);
+		
+		//Disposes the actions
 		makeActions();
 		hookContextMenu();
-		hookDoubleClickAction();
 		contributeToActionBars();
+		
+		//Sets the viewer sorter
+		comparator= new ConcernReCSViewerComparator();
+		viewer.setComparator(comparator);
+		
+		//Supports the case-sensitive search
+		search_text.addKeyListener(new KeyAdapter() 
+		{
+			public void keyReleased(KeyEvent event) 
+			{
+				filter.setSearchText(search_text.getText());
+				viewer.refresh();
+			}
+		});
+
+		filter = new CodeSmellFilter();
+		viewer.addFilter(filter);
+	}
+	
+	/**
+	 * Creates the TableViewer 
+	 * @param parent
+	 */
+	private void createViewer(Composite parent) 
+	{
+		viewer = new TableViewer(parent, SWT.MULTI | SWT.H_SCROLL | SWT.V_SCROLL | SWT.FULL_SELECTION | SWT.BORDER);
+		
+		createColumns(parent, viewer);
+		
+		final Table table = viewer.getTable();
+		
+		table.setHeaderVisible(true);
+		table.setLinesVisible(true);
+
+		//Sets the viewer data source
+		viewer.setContentProvider(new ArrayContentProvider());
+		viewer.setInput(ConcernReCSModelProvider.INSTANCE.initializeModelProvider(viewer));
+		
+		getSite().setSelectionProvider(viewer); // Make the selection available to other views
+
+		// Layout the viewer
+		GridData gridData = new GridData();
+		gridData.verticalAlignment = GridData.FILL;
+		gridData.horizontalSpan = 2;
+		gridData.grabExcessHorizontalSpace = true;
+		gridData.grabExcessVerticalSpace = true;
+		gridData.horizontalAlignment = GridData.FILL;
+		viewer.getControl().setLayoutData(gridData);
+	}
+	
+	/**
+	 * Initializes the actions
+	 */
+	private void makeActions() 
+	{
+		sniffaction = new SniffAction(viewer) ;
+		saveaction = new SaveAction(viewer); 
+		saveasaction = new SaveAsAction(viewer); 
 	}
 
+	/**
+	 * Sets the context menu layout
+	 */
 	private void hookContextMenu() 
 	{
 		MenuManager menuMgr = new MenuManager("#PopupMenu");
+
 		menuMgr.setRemoveAllWhenShown(true);
 		menuMgr.addMenuListener(new IMenuListener() 
 		{
@@ -102,13 +146,19 @@ public class ConcernReCSView extends ViewPart
 		});
 		
 		Menu menu = menuMgr.createContextMenu(viewer.getControl());
+		
 		viewer.getControl().setMenu(menu);
+		
 		getSite().registerContextMenu(menuMgr, viewer);
 	}
 
+	/**
+	 * Sets the actions bar
+	 */
 	private void contributeToActionBars() 
 	{
 		IActionBars bars = getViewSite().getActionBars();
+		
 		fillLocalPullDown(bars.getMenuManager());
 		fillLocalToolBar(bars.getToolBarManager());
 	}
@@ -118,12 +168,14 @@ public class ConcernReCSView extends ViewPart
 		manager.add(sniffaction);
 		manager.add(new Separator());
 		manager.add(saveaction);
+		manager.add(saveasaction);
 	}
 
 	private void fillContextMenu(IMenuManager manager) 
 	{
 		manager.add(sniffaction);
 		manager.add(saveaction);
+		manager.add(saveasaction);
 		// Other plug-ins can contribute there actions here
 		manager.add(new Separator(IWorkbenchActionConstants.MB_ADDITIONS));
 	}
@@ -132,42 +184,143 @@ public class ConcernReCSView extends ViewPart
 	{
 		manager.add(sniffaction);
 		manager.add(saveaction);
+		manager.add(saveasaction);
+	}
+	
+	/**
+	 * This will creates all the columns for the TableViewer
+	 */
+	private void createColumns(final Composite parent, final TableViewer viewer) 
+	{
+		String[] titles = { "Name", "Mistake", "Concern", "Error-proneness" , "Source" , "Where" }; //Columns tiltes
+		int[] bounds = { 250, 180, 140, 100, 150, 160 }; //Columns sizes
+
+		// First column is for the name
+		TableViewerColumn col = createTableViewerColumn(titles[0], bounds[0], 0);
+		
+		col.setLabelProvider(new ColumnLabelProvider() 
+			{
+				public String getText(Object element) 
+				{
+					CodeSmell smell = (CodeSmell) element;
+			
+					return smell.getName();
+				}
+			}
+		);
+
+		// Second column is for the mistake
+		col = createTableViewerColumn(titles[1], bounds[1], 1);
+		
+		col.setLabelProvider(new ColumnLabelProvider() 
+			{
+				public String getText(Object element) 
+				{
+					CodeSmell smell = (CodeSmell) element;
+					
+					return smell.getMistake();
+				}
+			}
+		);
+
+		// Third column is for the concern
+		col = createTableViewerColumn(titles[2], bounds[2], 2);
+				
+		col.setLabelProvider(new ColumnLabelProvider() 
+			{
+				public String getText(Object element) 
+				{
+					CodeSmell smell = (CodeSmell) element;
+							
+					return smell.getConcern();
+				}
+			}
+		);
+				
+		// Fourth column is for the error-proneness
+		col = createTableViewerColumn(titles[3], bounds[3], 3);
+				
+		col.setLabelProvider(new ColumnLabelProvider() 
+			{
+				public String getText(Object element) 
+				{
+					CodeSmell smell = (CodeSmell) element;
+							
+					return smell.getErrorProneness();
+				}
+			}
+		);
+				
+		// Fifth column is for the source
+		col = createTableViewerColumn(titles[4], bounds[4], 4);
+				
+		col.setLabelProvider(new ColumnLabelProvider() 
+			{
+				public String getText(Object element) 
+				{
+					CodeSmell smell = (CodeSmell) element;
+					
+					return smell.getSource();
+				}
+			}
+		);
+				
+		// Sixth column is for the where
+		col = createTableViewerColumn(titles[5], bounds[5], 5);
+				
+		col.setLabelProvider(new ColumnLabelProvider() 
+			{
+				public String getText(Object element) 
+				{
+					CodeSmell smell = (CodeSmell) element;
+							
+					return smell.getWhere();
+				}
+			}
+		);
 	}
 
-	private void makeActions() 
+	/**
+	 * Creates one column of the table
+	 */
+	private TableViewerColumn createTableViewerColumn(String title, int bound, final int column_number) 
 	{
-		sniffaction = new SniffAction(viewer) ;
+		final TableViewerColumn viewerColumn = new TableViewerColumn(viewer,SWT.NONE);
+		final TableColumn column = viewerColumn.getColumn();
 		
-		saveaction = new SaveAction(viewer); 
+		//Sets the column layout
+		column.setText(title);
+		column.setWidth(bound);
+		column.setResizable(true);
+		column.setMoveable(true);
+		column.addSelectionListener(getSelectionAdapter(column, column_number));
 		
-		doubleClickAction = new Action() 
+		return viewerColumn;
+	}
+	
+	//Provides the widget to support the table sorter
+	private SelectionAdapter getSelectionAdapter(final TableColumn column,final int index) 
+	{
+		SelectionAdapter selectionAdapter = new SelectionAdapter() 
 		{
-			public void run() 
+			public void widgetSelected(SelectionEvent event) 
 			{
-				ISelection selection = viewer.getSelection();
-				Object obj = ((IStructuredSelection)selection).getFirstElement();
-				showMessage("Double-click detected on "+obj.toString());
+				comparator.setColumn(index);
+		
+				int direction = comparator.getDirection();
+				
+				viewer.getTable().setSortDirection(direction);
+				viewer.getTable().setSortColumn(column);
+				viewer.refresh();
 			}
 		};
+		return selectionAdapter;
 	}
 
-	private void hookDoubleClickAction() 
-	{
-		viewer.addDoubleClickListener(new IDoubleClickListener() 
-		{
-			public void doubleClick(DoubleClickEvent event) 
-			{
-				doubleClickAction.run();
-			}
-		});
-	}
 
-	private void showMessage(String message) 
-	{
-		MessageDialog.openInformation(viewer.getControl().getShell(),
-				"ConcernReCS",message);
-	}
-
+	/**
+	 * Passing the focus request to the viewer's control.
+	 */
 	public void setFocus() 
 	{
 		viewer.getControl().setFocus();

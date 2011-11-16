@@ -11,7 +11,7 @@
 
 package ufmg.crcs.smells;
 
-class DedicatedImplementationConstant extends CodeSmell
+public class DedicatedImplementationConstant extends CodeSmell
 {	
 	private static final String NAME="Dedicated implementation constant"; //The name of the code smell
 	private static final String MISTAKE="Duplicated crosscutting code"; //The mistake that the smell can lead
@@ -20,7 +20,7 @@ class DedicatedImplementationConstant extends CodeSmell
 	/**
 	 * Initializes the code smell with a constant value for the name, mistake and error_proneness
 	 */
-	DedicatedImplementationConstant(String concern,String source,String where)
+	public DedicatedImplementationConstant(String concern,String source,String where)
 	{
 		super(NAME,MISTAKE,concern,ERROR_PRONENESS,source,where);
 	}

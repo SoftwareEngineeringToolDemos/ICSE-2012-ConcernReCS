@@ -12,27 +12,28 @@
 package ufmg.crcs.actions;
 
 import java.util.ArrayList;
-
 import org.eclipse.jface.action.Action;
+import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.ui.ISharedImages;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.jface.preference.IPreferenceStore;
 import org.eclipse.jface.viewers.TableViewer;
-import org.eclipse.jface.dialogs.MessageDialog;
 
 import ufmg.crcs.ConcernReCS;
 import ufmg.crcs.concernmapper.*;
 import ufmg.crcs.smells.*;
+import ufmg.crcs.views.ConcernReCSModelProvider;
 
 public class SniffAction extends Action
 {
-	private TableViewer viewer;
+	private TableViewer viewer; //Viewer related to this action
 	
 	public SniffAction(TableViewer viewer)
 	{
 		this.viewer=viewer;
+		
 		setText("Sniff");
-		setToolTipText("Sniff tooltip");
+		setToolTipText("Sniff");
 		setImageDescriptor(PlatformUI.getWorkbench().getSharedImages().
 			getImageDescriptor(ISharedImages.IMG_OBJS_INFO_TSK));
 	}
@@ -50,7 +51,7 @@ public class SniffAction extends Action
 		ArrayList<String> smells_names=collector.getSmellsNames(); //The names of all possible kinds of Code Smells
 		ArrayList<String> concerns_names=ConcernMapperInterface.getConcernNames(); //The names of all concerns added to the ConcernMapper
 		
-		//Verifies which Code Smells shoud not to be sought in the code
+		//Verifies which Code Smells should not to be sought in the code
 		for(String smell:smells_names)
 		{
 			if(store.contains(smell))
@@ -72,31 +73,17 @@ public class SniffAction extends Action
 		
 		collector.disableConcerns(disabled_concerns);		
 		
-		code_smells=collector.collectCodeSmells();
+		code_smells=collector.collectCodeSmells(); //Retrieves the list of Code Smells existing in the source code
 		
-		/**@test*/
-		{
-			for(CodeSmell code_smell:code_smells)
-			{
-				showMessage
-				(
-					"Name: "+code_smell.getName()+"\n"+
-					"Mistake: "+code_smell.getMistake()+"\n"+
-					"Concern: "+code_smell.getConcern()+"\n"+
-					"Source: "+code_smell.getSource()+"\n"+
-					"Where: "+code_smell.getWhere()+"\n"+
-					"Error-proneness: "+code_smell.getErrorProneness()+"\n"
-				);
-			}
-			
-			showMessage("Sniff action executed");
-		}
-		/**end test*/
+		ConcernReCSModelProvider.INSTANCE.codeSmellsChanged(code_smells); //Reset the input data for the ConcernReCS main view
 	}
-
+	
+	/**
+	 * Prints a simple message on the screen
+	 * @param message
+	 */
 	private void showMessage(String message) 
-	{
-		MessageDialog.openInformation(viewer.getControl().getShell(),
-			"ConcernReCS",message);
-	}
+ 	{
+ 		MessageDialog.openInformation(viewer.getControl().getShell(),"ConcernReCS",message);
+ 	}
 }

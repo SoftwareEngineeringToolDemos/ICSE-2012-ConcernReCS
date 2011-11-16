@@ -17,11 +17,10 @@ import org.eclipse.jdt.core.*;
 import org.eclipse.jdt.core.search.*;
 import org.eclipse.jdt.core.dom.*;
 
-
 public class ASTCreator 
 {
 	/**
-	 * Generates the ASTs for a list of search matches
+	 * Generates the ASTs from a list of search matches
 	 * @param The matches from which the ASTs should be created
 	 * @return The related ASTs
 	 */

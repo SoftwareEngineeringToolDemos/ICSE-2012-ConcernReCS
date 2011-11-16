@@ -7,9 +7,7 @@
  * Date: 09/19/2011
  */
 
-/**
- * Class responsible to find references to fields and methods
- */
+/**Class responsible to find references to fields and methods*/
 
 package ufmg.crcs.properties;
 

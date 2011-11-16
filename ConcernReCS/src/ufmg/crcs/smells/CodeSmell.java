@@ -65,8 +65,10 @@ public abstract class CodeSmell
 		this.error_proneness=error_proneness;
 	}
 	
-	public double getErrorProneness()
+	public String getErrorProneness()
 	{
+		String error_proneness=new String(""+this.error_proneness);
+		
 		return error_proneness;
 	}
 	
