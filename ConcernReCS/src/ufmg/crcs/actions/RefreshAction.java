@@ -23,21 +23,21 @@ import ufmg.crcs.concernmapper.*;
 import ufmg.crcs.smells.*;
 import ufmg.crcs.views.ConcernReCSModelProvider;
 
-public class SniffAction extends Action
+public class RefreshAction extends Action
 {
 	private TableViewer viewer; //Viewer related to this action
 	
-	public SniffAction(TableViewer viewer)
+	public RefreshAction(TableViewer viewer)
 	{
 		this.viewer=viewer;
 		
-		setText("Sniff");
-		setToolTipText("Sniff");
+		setText("Refresh");
+		setToolTipText("Refresh");
 		setImageDescriptor( ConcernReCS.getImageDescriptor("icons/refresh.gif") );
 	}
 	
 	/**
-	 * Executes the Sniff action
+	 * Executes the refresh action
 	 */
 	public void run() 
 	{	

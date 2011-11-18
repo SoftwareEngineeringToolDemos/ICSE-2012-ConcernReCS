@@ -10,7 +10,7 @@
       <view
             category="ufmg.crcs"
             class="ufmg.crcs.views.ConcernReCSView"
-            icon="icons/sample.gif"
+            icon="icons/crecs.png"
             id="ufmg.crcs.views.ConcernReCSView"
             name="ConcernReCS">
       </view>
