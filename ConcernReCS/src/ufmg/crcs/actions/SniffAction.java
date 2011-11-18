@@ -12,10 +12,9 @@
 package ufmg.crcs.actions;
 
 import java.util.ArrayList;
+
 import org.eclipse.jface.action.Action;
 import org.eclipse.jface.dialogs.MessageDialog;
-import org.eclipse.ui.ISharedImages;
-import org.eclipse.ui.PlatformUI;
 import org.eclipse.jface.preference.IPreferenceStore;
 import org.eclipse.jface.viewers.TableViewer;
 
@@ -34,8 +33,7 @@ public class SniffAction extends Action
 		
 		setText("Sniff");
 		setToolTipText("Sniff");
-		setImageDescriptor(PlatformUI.getWorkbench().getSharedImages().
-			getImageDescriptor(ISharedImages.IMG_OBJS_INFO_TSK));
+		setImageDescriptor( ConcernReCS.getImageDescriptor("icons/refresh.gif") );
 	}
 	
 	/**

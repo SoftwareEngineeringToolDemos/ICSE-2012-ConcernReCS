@@ -11,6 +11,7 @@
 
 package ufmg.crcs;
 
+import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
 import org.osgi.framework.BundleContext;
 
@@ -39,6 +40,11 @@ public class ConcernReCS extends AbstractUIPlugin
 		super.stop(context);
 	}
 
+	public static ImageDescriptor getImageDescriptor(String path) 
+	{
+		return imageDescriptorFromPlugin(PLUGIN_ID, path);
+	}
+	
 	/**
 	 * @return the shared instance
 	 */

@@ -16,6 +16,8 @@ package ufmg.crcs.actions;
 //import org.eclipse.core.resources.ResourcesPlugin;
 //import org.eclipse.core.runtime.CoreException;
 //import org.eclipse.core.runtime.IPath;
+import org.eclipse.ui.ISharedImages;
+import org.eclipse.ui.PlatformUI;
 import org.eclipse.jface.action.Action;
 import org.eclipse.jface.viewers.TableViewer;
 //import org.eclipse.jface.dialogs.MessageDialog;
@@ -32,6 +34,8 @@ import org.eclipse.jface.viewers.TableViewer;
 //import ca.mcgill.cs.serg.cm.ui.ConcernMapperPreferencePage;
 //import ca.mcgill.cs.serg.cm.views.ConcernMapperView;
 
+import ufmg.crcs.ConcernReCS;
+
 public class SaveAsAction extends Action
 {
 //    private ConcernMapperView aView;
@@ -43,7 +47,7 @@ public class SaveAsAction extends Action
 	{
 //	    aView = pView;
 //		setText( ConcernMapper.getResourceString( "actions.SaveAsAction.Label") );
-//		setImageDescriptor( ConcernMapper.imageDescriptorFromPlugin( ConcernMapper.ID_PLUGIN, "icons/saveas.gif")); 
+		setImageDescriptor( ConcernReCS.getImageDescriptor("icons/saveas.gif") );
 //		setToolTipText( ConcernMapper.getResourceString( "actions.SaveAsAction.ToolTip" ) ); 
 	}
 	

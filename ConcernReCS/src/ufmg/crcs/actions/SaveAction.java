@@ -17,6 +17,8 @@ import org.eclipse.jface.action.Action;
 //import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.viewers.TableViewer;
 
+import org.eclipse.ui.ISharedImages;
+import org.eclipse.ui.PlatformUI;
 //import org.eclipse.core.resources.IFile;
 //import org.eclipse.core.resources.IResource;
 //import org.eclipse.core.runtime.CoreException;
@@ -31,6 +33,8 @@ import org.eclipse.jface.viewers.TableViewer;
 //import ca.mcgill.cs.serg.cm.ui.ProblemManager;
 //import ca.mcgill.cs.serg.cm.views.ConcernMapperView;
 
+import ufmg.crcs.ConcernReCS;
+
 public class SaveAction extends Action
 {
 	private TableViewer viewer;
@@ -44,7 +48,7 @@ public class SaveAction extends Action
 	{
 //	    aView = pView;
 //		setText( ConcernMapper.getResourceString( "actions.SaveAction.Label") );
-//		setImageDescriptor( ConcernMapper.imageDescriptorFromPlugin( ConcernMapper.ID_PLUGIN, "icons/save.gif")); 
+		setImageDescriptor( ConcernReCS.getImageDescriptor("icons/save.gif") );
 //		setDisabledImageDescriptor( ConcernMapper.imageDescriptorFromPlugin( ConcernMapper.ID_PLUGIN, "icons/saved.gif")); 
 //		setToolTipText( ConcernMapper.getResourceString( "actions.SaveAction.ToolTip" ) ); 
 	
