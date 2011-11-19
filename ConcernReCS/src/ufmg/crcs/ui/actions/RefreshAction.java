@@ -9,7 +9,7 @@
 
 /**An action to find code smells in the source code*/
 
-package ufmg.crcs.actions;
+package ufmg.crcs.ui.actions;
 
 import java.util.ArrayList;
 
@@ -21,7 +21,7 @@ import org.eclipse.jface.viewers.TableViewer;
 import ufmg.crcs.ConcernReCS;
 import ufmg.crcs.concernmapper.*;
 import ufmg.crcs.smells.*;
-import ufmg.crcs.views.ConcernReCSModelProvider;
+import ufmg.crcs.ui.views.ConcernReCSModelProvider;
 
 public class RefreshAction extends Action
 {

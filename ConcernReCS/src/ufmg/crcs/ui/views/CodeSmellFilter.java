@@ -9,7 +9,7 @@
 
 /**Implements the case-sensitive search filter for the main view of ConcernReCS*/
 
-package ufmg.crcs.views;
+package ufmg.crcs.ui.views;
 
 import org.eclipse.jface.viewers.Viewer;
 import org.eclipse.jface.viewers.ViewerFilter;

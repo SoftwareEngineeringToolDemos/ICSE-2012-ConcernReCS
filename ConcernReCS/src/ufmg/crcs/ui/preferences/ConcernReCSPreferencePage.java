@@ -11,7 +11,7 @@
  * Class responsible to show the ConcerReCS preference page
  */
 
-package ufmg.crcs.preferences;
+package ufmg.crcs.ui.preferences;
 
 import java.util.*;
 

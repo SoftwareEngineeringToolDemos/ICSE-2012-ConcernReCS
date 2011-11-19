@@ -9,12 +9,13 @@
 
 /**The singleton model provider for the ConcernReCS view*/
 
-package ufmg.crcs.views;
+package ufmg.crcs.ui.views;
 
 import java.util.*;
 
 import org.eclipse.jface.viewers.TableViewer;
 
+import ufmg.crcs.ConcernReCS;
 import ufmg.crcs.smells.*;
 
 public enum ConcernReCSModelProvider 
@@ -23,7 +24,8 @@ public enum ConcernReCSModelProvider
 
 	private ArrayList<CodeSmell> code_smells; //Code Smells to be shown in the viewer
 	private TableViewer viewer; //TableViewer in which the Code Smells should be shown
-
+	private ConcernReCSView view; //ConcernReCS main view
+	
 	private ConcernReCSModelProvider() 
 	{
 		code_smells=null;
@@ -32,9 +34,11 @@ public enum ConcernReCSModelProvider
 	/**
 	 * Initializes the model provider and return an empty list of Code Smells
 	 */
-	public ArrayList<CodeSmell> initializeModelProvider(TableViewer viewer) 
+	public ArrayList<CodeSmell> initializeModelProvider(ConcernReCSView view) 
 	{
-		setViewer(viewer);
+		this.view=view;
+		
+		setViewer(view.getViewer());
 		
 		return code_smells;
 	}
@@ -74,6 +78,10 @@ public enum ConcernReCSModelProvider
 		setCodeSmells(code_smells);
 		
 		resetViewerInput();
+		
+		ConcernReCS.getDefault().contentChanged();
+		
+		view.updateActionState();
 	}
 	
 	/**

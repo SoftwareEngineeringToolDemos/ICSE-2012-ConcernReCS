@@ -9,8 +9,8 @@
       </category>
       <view
             category="ufmg.crcs"
-            class="ufmg.crcs.views.ConcernReCSView"
-            icon="icons/crecs.png"
+            class="ufmg.crcs.ui.views.ConcernReCSView"
+            icon="icons/smell.gif"
             id="ufmg.crcs.views.ConcernReCSView"
             name="ConcernReCS">
       </view>
@@ -18,7 +18,7 @@
    <extension
          point="org.eclipse.ui.preferencePages">
       <page
-            class="ufmg.crcs.preferences.ConcernReCSPreferencePage"
+            class="ufmg.crcs.ui.preferences.ConcernReCSPreferencePage"
             id="ufmg.crcs.preferences.ConcernReCSPreferencePage"
             name="ConcernReCS">
       </page>
@@ -26,7 +26,7 @@
    <extension
          point="org.eclipse.core.runtime.preferences">
       <initializer
-            class="ufmg.crcs.preferences.PreferenceInitializer">
+            class="ufmg.crcs.ui.preferences.PreferenceInitializer">
       </initializer>
    </extension>
    <extension

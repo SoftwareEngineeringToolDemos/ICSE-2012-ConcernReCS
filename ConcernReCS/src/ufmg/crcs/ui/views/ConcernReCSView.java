@@ -9,7 +9,7 @@
 
 /**Main ConcernReCS view, to show the found Code Smells*/
 
-package ufmg.crcs.views;
+package ufmg.crcs.ui.views;
 
 import org.eclipse.jface.action.*;
 import org.eclipse.jface.viewers.ArrayContentProvider;
@@ -33,8 +33,9 @@ import org.eclipse.ui.IActionBars;
 import org.eclipse.ui.IWorkbenchActionConstants;
 import org.eclipse.ui.part.ViewPart;
 
-import ufmg.crcs.actions.*;
+import ufmg.crcs.ConcernReCS;
 import ufmg.crcs.smells.*;
+import ufmg.crcs.ui.actions.*;
 
 public class ConcernReCSView extends ViewPart 
 {	
@@ -105,7 +106,7 @@ public class ConcernReCSView extends ViewPart
 
 		//Sets the viewer data source
 		viewer.setContentProvider(new ArrayContentProvider());
-		viewer.setInput(ConcernReCSModelProvider.INSTANCE.initializeModelProvider(viewer));
+		viewer.setInput(ConcernReCSModelProvider.INSTANCE.initializeModelProvider(this));
 		
 		getSite().setSelectionProvider(viewer); // Make the selection available to other views
 
@@ -125,10 +126,24 @@ public class ConcernReCSView extends ViewPart
 	private void makeActions() 
 	{
 		refreshaction = new RefreshAction(viewer) ;
-		saveaction = new SaveAction(viewer); 
-		saveasaction = new SaveAsAction(viewer); 
+		saveaction = new SaveAction(this); 
+		saveasaction = new SaveAsAction(this); 
+		
+		saveaction.setEnabled(ConcernReCS.getDefault().isDirty());
 	}
 
+	/**
+	 * Updates the action buttons
+	 */
+	public void updateActionState()
+	{
+		boolean enabled= ConcernReCS.getDefault().isDirty(); //Indicates if the view content has changed
+		
+		saveaction.setEnabled(enabled);
+
+		getViewSite().getActionBars().updateActionBars();
+	}
+	
 	/**
 	 * Sets the context menu layout
 	 */
@@ -324,5 +339,10 @@ public class ConcernReCSView extends ViewPart
 	public void setFocus() 
 	{
 		viewer.getControl().setFocus();
+	}
+	
+	public TableViewer getViewer()
+	{
+		return viewer;
 	}
 }

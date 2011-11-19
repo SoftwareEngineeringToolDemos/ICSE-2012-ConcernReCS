@@ -11,7 +11,7 @@
  * Class used to initialize default preferences values
  */
 
-package ufmg.crcs.preferences;
+package ufmg.crcs.ui.preferences;
 
 import java.util.*;
 

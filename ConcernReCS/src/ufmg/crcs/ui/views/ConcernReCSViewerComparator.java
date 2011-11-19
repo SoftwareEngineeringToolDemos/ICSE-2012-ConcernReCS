@@ -9,7 +9,7 @@
 
 /**Class defining the viewer sort criteria*/
 
-package ufmg.crcs.views;
+package ufmg.crcs.ui.views;
 
 import org.eclipse.jface.viewers.ViewerComparator;
 import org.eclipse.jface.viewers.Viewer;
