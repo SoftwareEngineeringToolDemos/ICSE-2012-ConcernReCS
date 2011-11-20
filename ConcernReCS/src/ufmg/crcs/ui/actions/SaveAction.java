@@ -22,6 +22,7 @@ import org.eclipse.ui.PlatformUI;
 import ufmg.crcs.ConcernReCS;
 import ufmg.crcs.ui.views.ConcernReCSModelProvider;
 import ufmg.crcs.ui.views.ConcernReCSView;
+import ufmg.crcs.smells.io.*;
 
 public class SaveAction extends Action
 {

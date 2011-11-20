@@ -28,6 +28,7 @@ import org.eclipse.ui.dialogs.SaveAsDialog;
 import ufmg.crcs.ConcernReCS;
 import ufmg.crcs.ui.views.ConcernReCSModelProvider;
 import ufmg.crcs.ui.views.ConcernReCSView;
+import ufmg.crcs.smells.io.*;
 
 public class SaveAsAction extends Action
 {
