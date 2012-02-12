@@ -12,12 +12,25 @@
 package ufmg.crcs.smells;
 
 import java.util.*;
+
+import org.eclipse.jdt.core.IField;
+import org.eclipse.jdt.core.IJavaElement;
+import org.eclipse.jdt.core.IMember;
+import org.eclipse.jdt.core.IMethod;
+import org.eclipse.jdt.core.IType;
+import org.eclipse.jdt.core.JavaModelException;
+
 import ufmg.crcs.concernmapper.*;
 
 public class CodeSmellsCollector 
 {
 	//Strings representing all the kinds of Code Smells
-	private String DEDICATED_IMPLEMENTATION_CONSTANT="Dedicated Implementation Constant";
+	private final String PRIMITIVE_CONSTANT_ATTRIBUTE="Primitive constant attribute";
+	private final String STATIC_ELEMENT = "Static element";
+	private final String ATTRIBUTE_OF_A_NON_DEDICATED_TYPE = "Attribute of a non-dedicated type";
+	private final String CONDITIONAL_CONSTRUCTION_EVAL_LOCAL_VAR = "Conditional construction evaluating a local variable";
+	private final String DIVERGENT_ADVICE = "Divergent advice";
+	private final String ELEMENT_OUT_OF_INHERIT_TREE = "Element out of inheritance tree";
 	
 	private Hashtable<String, Boolean> smells = new Hashtable<String, Boolean>(); //Stores if each Code Smell should or not to be sought
 	private ArrayList<String> concerns; //Stores the names of the concerns in which Code Smells should be sought
@@ -29,7 +42,12 @@ public class CodeSmellsCollector
 	{
 		concerns=ConcernMapperInterface.getConcernNames();
 		
-		smells.put(DEDICATED_IMPLEMENTATION_CONSTANT,true);
+		smells.put(PRIMITIVE_CONSTANT_ATTRIBUTE,true);
+		smells.put(STATIC_ELEMENT,true);
+		smells.put(ATTRIBUTE_OF_A_NON_DEDICATED_TYPE,true);
+		smells.put(CONDITIONAL_CONSTRUCTION_EVAL_LOCAL_VAR,true);
+		smells.put(DIVERGENT_ADVICE,true);
+		smells.put(ELEMENT_OUT_OF_INHERIT_TREE,true);
 	}
 	
 	/**
@@ -40,7 +58,12 @@ public class CodeSmellsCollector
 		ArrayList<String> smells_names=new ArrayList<String>();
 				
 		//Adds the names of all kinds of Code Smells
-		smells_names.add(DEDICATED_IMPLEMENTATION_CONSTANT);
+		smells_names.add(PRIMITIVE_CONSTANT_ATTRIBUTE);
+		smells_names.add(STATIC_ELEMENT);
+		smells_names.add(ATTRIBUTE_OF_A_NON_DEDICATED_TYPE);
+		smells_names.add(CONDITIONAL_CONSTRUCTION_EVAL_LOCAL_VAR);
+		smells_names.add(DIVERGENT_ADVICE);
+		smells_names.add(ELEMENT_OUT_OF_INHERIT_TREE);
 		
 		return smells_names;
 	}
@@ -88,14 +111,104 @@ public class CodeSmellsCollector
 	{	
 		ArrayList<CodeSmell> found_smells=new ArrayList<CodeSmell>(); //Code Smells found in the source code
 		
-		//Collect each kind of Code Smell if it should bo collected
-		if(smells.get(DEDICATED_IMPLEMENTATION_CONSTANT)==true)
+		//Collect each kind of Code Smell if it should be collected
+		if(smells.get(PRIMITIVE_CONSTANT_ATTRIBUTE)==true)
 		{
-			DedicatedImplementationConstantFinder finder=new DedicatedImplementationConstantFinder();
+			PrimitiveConstantAttributeFinder finder=new PrimitiveConstantAttributeFinder();
+			
+			found_smells.addAll(finder.findCodeSmells(concerns));
+		}
+		
+		if(smells.get(STATIC_ELEMENT)==true)
+		{
+			StaticElementFinder finder=new StaticElementFinder();
+			
+			found_smells.addAll(finder.findCodeSmells(concerns));
+		}
+		
+		if(smells.get(ATTRIBUTE_OF_A_NON_DEDICATED_TYPE)==true)
+		{
+			AttributeOfANonDedicatedTypeFinder finder=new AttributeOfANonDedicatedTypeFinder();
+			
+			found_smells.addAll(finder.findCodeSmells(concerns));
+		}
+		
+		if(smells.get(CONDITIONAL_CONSTRUCTION_EVAL_LOCAL_VAR)==true)
+		{
+			ConditionalConstructionEvaluatingALocalVariableFinder finder=new ConditionalConstructionEvaluatingALocalVariableFinder();
+			
+			found_smells.addAll(finder.findCodeSmells(concerns));
+		}
+		
+		if(smells.get(DIVERGENT_ADVICE)==true)
+		{
+			DivergentAdviceFinder finder=new DivergentAdviceFinder();
+			
+			found_smells.addAll(finder.findCodeSmells(concerns));
+		}
+		
+		if(smells.get(ELEMENT_OUT_OF_INHERIT_TREE)==true)
+		{
+			ElementOutOfInheritanceTreeFinder finder=new ElementOutOfInheritanceTreeFinder();
 			
 			found_smells.addAll(finder.findCodeSmells(concerns));
 		}
 		
 		return found_smells;
+	}
+
+	public static ArrayList<IType> getDedicatedTypes(String concern) 
+	{
+		ArrayList<IType> dedicated_types=new ArrayList<IType>();
+		ArrayList<IJavaElement> concern_elements=ConcernMapperInterface.getConcernElements(concern); //Elements added to the ConcernMapper plug-in
+		
+		//Inspects the type of each concern element
+		for(IJavaElement element:concern_elements)
+		{
+			IType type=((IMember)element).getDeclaringType(); //Element type
+			
+			boolean dedicated=true; //Indicates whether this type is completely dedicated to the concern 
+			
+			try
+			{	
+				//Inspect all the fields of the type
+				for(IField field:type.getFields())
+				{
+					boolean exists=false;
+					
+					for(IJavaElement concern_element:concern_elements)
+					{
+						if(concern_element.equals(field))exists=true;
+					}
+					
+					if(exists==false)dedicated=false;
+					if(exists==false)break;
+				}
+			
+				if(dedicated==true)
+				{
+					for(IMethod method:type.getMethods())
+					{
+						boolean exists=false;
+						
+						for(IJavaElement concern_element:concern_elements)
+						{
+							if(concern_element.equals(method))exists=true;
+						}
+						
+						if(exists==false)dedicated=false;
+						if(exists==false)break;
+					}
+				}
+			}
+			catch(JavaModelException exception)
+			{
+				return null;
+			}
+			
+			if((dedicated==true)&&(!dedicated_types.contains(type)))dedicated_types.add(type);
+		}
+		
+		return dedicated_types;
 	}
 }

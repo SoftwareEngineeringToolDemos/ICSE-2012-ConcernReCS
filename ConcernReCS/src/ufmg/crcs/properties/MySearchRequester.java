@@ -15,7 +15,7 @@ import java.util.*;
 
 import org.eclipse.jdt.core.search.*;
 
-class MySearchRequestor extends SearchRequestor
+class MySearchRequester extends SearchRequestor
 {
 	ArrayList<SearchMatch> searchmatches; //Search matches
 	

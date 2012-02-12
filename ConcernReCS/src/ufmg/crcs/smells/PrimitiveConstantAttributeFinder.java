@@ -16,18 +16,12 @@ import java.util.ArrayList;
 import org.eclipse.jdt.core.IJavaElement;
 import org.eclipse.jdt.core.IField;
 import org.eclipse.jdt.core.JavaModelException;
+import org.eclipse.jdt.core.dom.Modifier;
 
 import ufmg.crcs.concernmapper.*;
 
-public class DedicatedImplementationConstantFinder extends CodeSmellFinder
+public class PrimitiveConstantAttributeFinder extends CodeSmellFinder
 {
-	private static final String CODE_SMELL_NAME="Dedicated Implementation Constant";
-	
-	public DedicatedImplementationConstantFinder()
-	{
-		super(CODE_SMELL_NAME);
-	}
-	
 	/**
 	 * Implements the algorithm to find the Dedicated implementation constant code smell
 	 */
@@ -35,7 +29,7 @@ public class DedicatedImplementationConstantFinder extends CodeSmellFinder
 	{
 		ArrayList <CodeSmell> code_smells=new ArrayList <CodeSmell>();
 		
-		//Looks for the Dedicated implementation constant code smell in each of the selected concerns
+		//Looks for the Code Smell in each of the selected concerns
 		for(String concern:concerns)
 		{
 			ArrayList<IJavaElement> concern_elements=ConcernMapperInterface.getConcernElements(concern); //Elements added to the ConcernMapper plug-in
@@ -48,12 +42,13 @@ public class DedicatedImplementationConstantFinder extends CodeSmellFinder
 					//If the element is a constant class field
 					if(element.getElementType()==field)
 					{
-						if(((IField)element).getConstant()!=null)
+						//Verifies if the field has an final modifier
+						if(Modifier.isFinal(((IField)element).getFlags())==true)
 						{
 							String source=element.getResource().getName(); //File in which this element is declared
 							String where="Field "+element.getElementName(); //Which of the file elements this element is
 						
-							DedicatedImplementationConstant smell=new DedicatedImplementationConstant(concern,source,where);
+							PrimitiveConstantAttribute smell=new PrimitiveConstantAttribute(concern,source,where);
 						
 							code_smells.add(smell); //Stores the code smell
 						}
@@ -65,7 +60,7 @@ public class DedicatedImplementationConstantFinder extends CodeSmellFinder
 				}
 			}
 		}
-	
+		
 		return code_smells;
 	}
 }

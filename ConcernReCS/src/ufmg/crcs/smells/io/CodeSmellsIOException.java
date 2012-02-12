@@ -15,6 +15,8 @@ import java.io.IOException;
 
 public class CodeSmellsIOException extends IOException
 {
+	private static final long serialVersionUID = 1L;
+
 	public CodeSmellsIOException(String message) 
 	{
 		super(message);

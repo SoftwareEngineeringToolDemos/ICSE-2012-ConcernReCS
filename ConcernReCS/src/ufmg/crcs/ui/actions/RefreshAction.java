@@ -14,7 +14,6 @@ package ufmg.crcs.ui.actions;
 import java.util.ArrayList;
 
 import org.eclipse.jface.action.Action;
-import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.preference.IPreferenceStore;
 import org.eclipse.jface.viewers.TableViewer;
 
@@ -24,13 +23,9 @@ import ufmg.crcs.smells.*;
 import ufmg.crcs.ui.views.ConcernReCSModelProvider;
 
 public class RefreshAction extends Action
-{
-	private TableViewer viewer; //Viewer related to this action
-	
+{	
 	public RefreshAction(TableViewer viewer)
-	{
-		this.viewer=viewer;
-		
+	{	
 		setText("Refresh");
 		setToolTipText("Refresh");
 		setImageDescriptor( ConcernReCS.getImageDescriptor("icons/refresh.gif") );
@@ -75,13 +70,4 @@ public class RefreshAction extends Action
 		
 		ConcernReCSModelProvider.INSTANCE.codeSmellsChanged(code_smells); //Reset the input data for the ConcernReCS main view
 	}
-	
-	/**
-	 * Prints a simple message on the screen
-	 * @param message
-	 */
-	private void showMessage(String message) 
- 	{
- 		MessageDialog.openInformation(viewer.getControl().getShell(),"ConcernReCS",message);
- 	}
 }
