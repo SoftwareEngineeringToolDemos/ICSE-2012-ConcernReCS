@@ -57,14 +57,21 @@ public class ElementOutOfInheritanceTreeFinder extends CodeSmellFinder
 				{
 					for(SearchMatch b_match:element_references)
 					{
+						if(a_match == b_match)
+							continue;
+						
 						String a_signature = "a"; //Super type signature of the first element
 						String b_signature = "b"; //Super type signature of the second element
+						
+						IType a_type = null;
+						IType b_type = null;
 					
 						if((((IJavaElement)a_match.getElement()) instanceof IField)||(((IJavaElement)a_match.getElement()) instanceof IMethod))
 						{
 							try
 							{
-								a_signature = ((IMember)a_match.getElement()).getDeclaringType().getSuperclassTypeSignature();
+								a_type = ((IMember)a_match.getElement()).getDeclaringType();
+								a_signature = a_type.getSuperclassTypeSignature();
 							}
 							catch(JavaModelException exception)
 							{
@@ -75,7 +82,8 @@ public class ElementOutOfInheritanceTreeFinder extends CodeSmellFinder
 						{
 							try
 							{
-								a_signature = ((IType)a_match.getElement()).getSuperclassTypeSignature();
+								a_type = ((IType)a_match.getElement());
+								a_signature = a_type.getSuperclassTypeSignature();
 							}
 							catch(JavaModelException exception)
 							{
@@ -87,7 +95,8 @@ public class ElementOutOfInheritanceTreeFinder extends CodeSmellFinder
 						{
 							try
 							{
-								b_signature = ((IMember)b_match.getElement()).getDeclaringType().getSuperclassTypeSignature();
+								b_type = ((IMember)b_match.getElement()).getDeclaringType();
+								b_signature = b_type.getSuperclassTypeSignature();
 							}
 							catch(JavaModelException exception)
 							{
@@ -98,7 +107,8 @@ public class ElementOutOfInheritanceTreeFinder extends CodeSmellFinder
 						{
 							try
 							{
-								b_signature = ((IType)b_match.getElement()).getSuperclassTypeSignature();
+								b_type = ((IType)b_match.getElement());
+								b_signature = b_type.getSuperclassTypeSignature();
 							}
 							catch(JavaModelException exception)
 							{
@@ -106,7 +116,7 @@ public class ElementOutOfInheritanceTreeFinder extends CodeSmellFinder
 							}
 						}
 						
-						if((a_signature != null) && (b_signature != null))
+						if((a_signature != null) && (b_signature != null) && (!a_type.equals(b_type)))
 						{
 							if(a_signature.equals(b_signature))
 							{
