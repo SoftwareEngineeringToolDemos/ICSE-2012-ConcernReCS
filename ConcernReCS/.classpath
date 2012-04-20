@@ -3,5 +3,7 @@
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.6"/>
 	<classpathentry kind="con" path="org.eclipse.pde.core.requiredPlugins"/>
 	<classpathentry kind="src" path="src"/>
+	<classpathentry kind="src" path="extension"/>
+	<classpathentry kind="lib" path="D:/Backup Win7/Documents/UFMG/Eclipse/eclipse/plugins/lancs.concerns_1.0.0.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
