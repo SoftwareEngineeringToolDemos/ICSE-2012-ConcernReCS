@@ -14,6 +14,13 @@
             id="ufmg.crcs.views.ConcernReCSView"
             name="ConcernReCS">
       </view>
+      <view
+            category="ufmg.crcs"
+            class="ufmg.crcs.ui.views.ConcernReCSExtensionView"
+            icon="icons/smell.gif"
+            id="ufmg.crcs.views.ConcernReCSExtensionView"
+            name="Extension View">
+      </view>
    </extension>
    <extension
          point="org.eclipse.ui.preferencePages">
@@ -34,6 +41,24 @@
       <fileModificationValidator
             class="concernrecs.FileModificationValidator1">
       </fileModificationValidator>
+   </extension>
+   <extension
+         point="org.eclipse.ui.perspectiveExtensions">
+      <perspectiveExtension
+            targetID="org.eclipse.jdt.ui.JavaPerspective">
+         <view
+               id="ufmg.crcs.views.ConcernReCSExtensionView"
+               ratio="0.5"
+               relationship="right"
+               relative="org.eclipse.ui.views.TaskList">
+         </view>
+      </perspectiveExtension>
+   </extension>
+   <extension
+         point="org.eclipse.help.contexts">
+      <contexts
+            file="contexts.xml">
+      </contexts>
    </extension>
 
 </plugin>

@@ -22,8 +22,8 @@ public class DivergentChangeFinder extends BadSmellFinder
 			
 			if (isDivergentChange())
 			{
-				String source = "";  // TODO;
-				String where = "";   // TODO;
+				String source = "TODO";  // TODO;
+				String where = "TODO";   // TODO;
 				DivergentChange divergentChange = new DivergentChange(source, where); 
 				
 				bad_smells.add(divergentChange);

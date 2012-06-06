@@ -15,7 +15,7 @@ public abstract class BadSmell
 	
 	private void setName(String name)
 	{
-		this.name=name;
+		this.name = name;
 	}
 	
 	public String getName()
@@ -25,7 +25,7 @@ public abstract class BadSmell
 	
 	private void setSource(String source)
 	{
-		this.source=source;
+		this.source = source;
 	}
 	
 	public String getSource()
@@ -35,7 +35,7 @@ public abstract class BadSmell
 	
 	private void setWhere(String where)
 	{
-		this.where=where;
+		this.where = where;
 	}
 	
 	public String getWhere()

@@ -2,10 +2,6 @@ package ufmg.crcs.badsmells;
 
 import java.util.ArrayList;
 
-import org.eclipse.jdt.core.IJavaElement;
-
-import ufmg.crcs.concernmapper.ConcernMapperInterface;
-
 import ufmg.crcs.concernmorph.ConcernMorphInterface;
 
 
@@ -14,7 +10,7 @@ public class GodClassFinder extends BadSmellFinder
 	private ConcernMorphInterface concernMorph = new ConcernMorphInterface();
 	
 	/**
-	 * Implements the algorithm to find the Shotgun Surgery bad smell
+	 * Implements the algorithm to find the God Class bad smell
 	 */
 	protected ArrayList <BadSmell> findBadSmells(ArrayList<String> concerns)
 	{
@@ -26,11 +22,8 @@ public class GodClassFinder extends BadSmellFinder
 			
 			if (isGodClass())
 			{
-//				ArrayList<IJavaElement> concern_elements = ConcernMapperInterface.getConcernElements(concern); //Elements added to the ConcernMapper plug-in
-				
-//				String source = element.getResource().getName(); //File in which this element is declared
-				String source = "";  // TODO;
-				String where = "";   // TODO;
+				String source = "TEST";  // TODO;
+				String where = "TEST";   // TODO;
 				GodClass godClass = new GodClass(source, where); 
 				
 				bad_smells.add(godClass);
@@ -47,11 +40,13 @@ public class GodClassFinder extends BadSmellFinder
 	
 	private boolean isGodClass() 
 	{
-		if (concernMorph.getCDOvalue() == 3)
+		if (concernMorph.getCDOvalue() >= 0)
 		{
 			return true;
 		}
 		
-		else return false;
+		else {
+			return false;
+		}
 	}
 }
