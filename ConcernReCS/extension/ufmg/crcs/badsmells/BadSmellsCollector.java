@@ -17,7 +17,7 @@ import ufmg.crcs.concernmapper.*;
 
 public class BadSmellsCollector 
 {
-	//Strings representing all the kinds of Code Smells
+	//Strings representing all the kinds of Bad Smells
 	private final String DIVERGENT_CHANGE = "Divergent Change";
 	private final String GOD_CLASS = "God Class";
 	private final String SHOTGUN_SURGERY = "Shotgun Surgery";
@@ -65,7 +65,7 @@ public class BadSmellsCollector
 	}
 	
 	/**
-	 * Defines the names of the concerns in which Code Smells should not be sought
+	 * Defines the names of the concerns in which Bad Smells should not be sought
 	 * @param concerns to be disabled
 	 */
 	public void disableConcerns(ArrayList<String> disabled_concerns)
@@ -107,7 +107,6 @@ public class BadSmellsCollector
 		
 		if (badSmells.get(GOD_CLASS) == true)
 		{
-			System.out.printf("\n\nOK!\n\n");
 			GodClassFinder finder = new GodClassFinder();
 			
 			found_bad_smells.addAll(finder.findBadSmells(concerns));

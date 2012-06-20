@@ -17,7 +17,7 @@ public enum ConcernReCSExtensionModelProvider
 	
 	private ConcernReCSExtensionModelProvider() 
 	{
-		bad_smells=null;
+		bad_smells = null;
 	}
 
 	/**
@@ -25,7 +25,7 @@ public enum ConcernReCSExtensionModelProvider
 	 */
 	public ArrayList<BadSmell> initializeModelProvider(ConcernReCSExtensionView view) 
 	{
-		this.view=view;
+		this.view = view;
 		
 		setViewer(view.getViewer());
 		
@@ -38,7 +38,7 @@ public enum ConcernReCSExtensionModelProvider
 	 */
 	private void setViewer(TableViewer viewer)
 	{
-		this.viewer=viewer;
+		this.viewer = viewer;
 	}
 	
 	/**
@@ -47,7 +47,7 @@ public enum ConcernReCSExtensionModelProvider
 	 */
 	private void setBadSmells(ArrayList<BadSmell> bad_smells)
 	{
-		this.bad_smells=bad_smells;
+		this.bad_smells = bad_smells;
 	}
 	
 	/**

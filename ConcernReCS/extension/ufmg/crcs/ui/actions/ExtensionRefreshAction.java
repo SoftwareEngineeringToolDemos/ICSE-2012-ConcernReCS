@@ -10,6 +10,7 @@ import ufmg.crcs.ConcernReCS;
 import ufmg.crcs.concernmapper.*;
 import ufmg.crcs.badsmells.*;
 import ufmg.crcs.ui.views.ConcernReCSExtensionModelProvider;
+import lancs.concerns.metrics.*;
 
 public class ExtensionRefreshAction extends Action
 {	
@@ -57,7 +58,9 @@ public class ExtensionRefreshAction extends Action
 				
 //		collector.disableSmells(disabled_smells);
 		
-//		collector.disableConcerns(disabled_concerns);		
+//		collector.disableConcerns(disabled_concerns);
+		
+		MetricsCollector.getCollector().refresh();
 		
 		bad_smells = collector.collectBadSmells(); //Retrieves the list of Code Smells existing in the source code
 		

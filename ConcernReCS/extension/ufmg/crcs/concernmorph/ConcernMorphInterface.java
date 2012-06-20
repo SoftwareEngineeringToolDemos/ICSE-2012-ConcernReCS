@@ -1,6 +1,6 @@
 package ufmg.crcs.concernmorph;
 
-import lancs.concerns.metrics.*;
+import lancs.concerns.metrics.MetricsCollector;;
 
 public class ConcernMorphInterface 
 {
