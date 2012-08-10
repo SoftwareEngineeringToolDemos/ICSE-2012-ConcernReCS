@@ -4,6 +4,5 @@
 	<classpathentry kind="con" path="org.eclipse.pde.core.requiredPlugins"/>
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="src" path="extension"/>
-	<classpathentry kind="lib" path="lib/lancs.concerns_1.0.0.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
