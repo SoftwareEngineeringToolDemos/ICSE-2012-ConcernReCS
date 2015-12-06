@@ -1,0 +1,7 @@
+[Desktop Entry]
+Type=Application
+Exec=/home/vagrant/eclipse/eclipse -import /home/vagrant/workspace/
+Hidden=false
+NoDisplay=false
+X-GNOME-Autostart-enabled=true
+Name=Startup Script
