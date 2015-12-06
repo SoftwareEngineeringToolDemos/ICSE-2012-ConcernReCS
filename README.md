@@ -8,8 +8,9 @@ This repository _is not_ the original repository for this tool. Here are some li
 * [A Video of the Tool](http://www.youtube.com/watch?v=xTpI2XwfSjY&feature=player_detailpage)
 
 In this repository, for ConcernReCS you will find:
-* :white_check_mark: [Source code](Source) (available)
-* :white_check_mark: [The original tool](Binaries/ufmg.crcs_1.0.0.jar) (available)
+* :white_check_mark: [Source code](ConcernReCS) (available)
+* :white_check_mark: [The original tool](Binaries) (available)
+* :white_check_mark: [Vagrant Script to create virtual machine containing the tool](build-vm) (available)
 * :white_check_mark: [Virtual machine containing tool](https://drive.google.com/a/ncsu.edu/file/d/0B5_co1c8kYwDUnJJdnNvVWc1SWc/view?usp=sharing) (available)
 
 This repository was constructed by [Pulkesh Yadav](https://github.com/pulkeshyadav) under the supervision of [Emerson Murphy-Hill](https://github.com/CaptainEmerson). Thanks to Péricles Alves and colleagues for their help in establishing this repository. 
