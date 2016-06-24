@@ -11,6 +11,6 @@ In this repository, for ConcernReCS you will find:
 * :white_check_mark: [Source code](ConcernReCS) (available)
 * :white_check_mark: [The original tool](Binaries) (available)
 * :white_check_mark: [Vagrant script to create virtual machine containing the tool](build-vm) (available)
-* :white_check_mark: [Virtual machine containing tool](https://drive.google.com/a/ncsu.edu/file/d/0B5_co1c8kYwDUnJJdnNvVWc1SWc/view?usp=sharing) (available)
+* :white_check_mark: [Virtual machine containing tool](http://go.ncsu.edu/SE-tool-VMs)
 
 This repository was constructed by [Pulkesh Yadav](https://github.com/pulkeshyadav) under the supervision of [Emerson Murphy-Hill](https://github.com/CaptainEmerson). Thanks to Péricles Alves and colleagues for their help in establishing this repository. 
